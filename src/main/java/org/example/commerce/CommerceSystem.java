@@ -17,45 +17,41 @@ public class CommerceSystem {
             for (int i = 0; i < categories.size(); i++) {
                 System.out.println((i+1)+". "+categories.get(i).getCategoryName());
             }
-            System.out.println("0. 종료         | 프로그램 종료");
+            System.out.println("0. 종료      | 프로그램 종료");
             System.out.printf("선택 >> ");
             menu = sc.nextInt();
-            int index = 0;
 
-            switch (menu){ //0=전자제품, 1=식품, 2=의류
-                case 1:
-                    System.out.println("\n[ 전자제품 카테고리 ]");
-                    for (Product p : categories.get(menu-1).getProducts()) {
-                        System.out.printf("%d. %-15s | %,10d원 | %3d개 | %s%n", (index + 1), p.getProductName(), p.getPrice(), p.getStock(), p.getComment());
-                        index++;
-                    }
-                    break;
-                case 2:
-                    System.out.println("\n[ 식품 카테고리 ]");
-                    for (Product p : categories.get(menu-1).getProducts()) {
-                        System.out.printf("%d. %-15s | %,10d원 | %3d개 | %s%n", (index + 1), p.getProductName(), p.getPrice(), p.getStock(), p.getComment());
-                        index++;
-                    }
-                    break;
-                case 3:
-                    System.out.println("\n[ 의류 카테고리 ]");
-                    for (Product p : categories.get(menu-1).getProducts()) {
-                        System.out.printf("%d. %-15s | %,10d원 | %3d개 | %s%n", (index + 1), p.getProductName(), p.getPrice(), p.getStock(), p.getComment());
-                        index++;
-                    }
-                    break;
-                case 0:
-                    System.out.printf("커머스 플랫폼을 종료합니다.");
-                    System.exit(0);
-                    break;
-                default:
-                    break;
+            if (menu > 0 && menu <= categories.size()){
+                categoryMenu(categories.get(menu-1));
+            } else if (menu == 0) {
+                break;
             }
-
         }
     }
 
-    public void SelectProduct(){
+    private void categoryMenu(Category category){
+        System.out.println("\n[ "+category.getCategoryName()+" 카테고리 ]");
+        List<Product> products = category.getProducts();
 
+        //상품 목록 출력
+        for (int i = 0; i < products.size(); i++) {
+            Product p = products.get(i);
+            System.out.printf("%d. %-12s | %,10d원 | %3d개 | %s%n", (i + 1), p.getProductName(), p.getPrice(), p.getStock(), p.getComment());
+        }
+        System.out.println("0. 뒤로가기");
+
+        System.out.print("선택 >> ");
+        int productChoice = sc.nextInt();
+
+        //선택한 상품 보기
+        if (productChoice > 0 && productChoice <= products.size()){
+            System.out.print("선택한 상품: ");
+            for (int i = 0; i < products.size(); i++) {
+                Product p = products.get(i);
+                if (productChoice-1 == i){
+                    System.out.printf("%-12s | %,10d원 | %3d개 | %s%n", p.getProductName(), p.getPrice(), p.getStock(), p.getComment());
+                }
+            }
+        }
     }
 }
