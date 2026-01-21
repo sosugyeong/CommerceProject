@@ -20,7 +20,7 @@ public class Cart {
     private final List<CartItem> items = new ArrayList<>();
 
     //장바구니 안에서만 사용할 물건 정보
-    private static class CartItem {
+    public static class CartItem {
         private String productName;
         private int count;
         private int price;
@@ -29,6 +29,16 @@ public class Cart {
             this.productName = productName;
             this.count = count;
             this.price = price;
+        }
+
+        public String getProductName() {
+            return productName;
+        }
+        public int getCount() {
+            return count;
+        }
+        public int getPrice() {
+            return price;
         }
     }
 
@@ -42,4 +52,16 @@ public class Cart {
         return items;
     }
 
+    //장바구니 확인 메서드에서 쓸 getItems
+    public List<CartItem> getItems(){
+        return this.items;
+    }
+
+    public int getTotalPrice(){
+        int total = 0;
+        for(CartItem item : items){
+            total += item.getPrice();
+        }
+        return total;
+    }
 }
