@@ -15,6 +15,7 @@ public class Category {
         return products;
     }
 
+    //카테고리 이름 반환 메서드
     public String getCategoryName(){ //카테고리 이름을 반환하는 메서드
         return categoryName;
     }
