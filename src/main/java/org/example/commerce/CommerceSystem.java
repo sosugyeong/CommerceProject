@@ -52,21 +52,36 @@ public class CommerceSystem {
     private void categoryMenu(Category category){ // 카테고리별 상품 메뉴 출력
         System.out.println("\n[ "+category.getCategoryName()+" 카테고리 ]");
         List<Product> products = category.getProducts();
-
-        //상품 목록 출력
-//        for (int i = 0; i < products.size(); i++) {
-//            Product p = products.get(i);
-//            System.out.printf("%d. %-10s | %,10d원 | %3d개 | %s%n", (i + 1), p.getProductName(), p.getPrice(), p.getStock(), p.getComment());
-//        }
-        IntStream.range(0, products.size())
-                        .forEach(i -> {
-                            Product p = products.get(i);
-                            System.out.printf("%d. %-10s | %,10d원 | %3d개 | %s%n",
-                                    i+1, p.getProductName(), p.getPrice(), p.getStock(), p.getComment()
-                            );
-                        });
+        System.out.println("1. 전체상품 보기\n2. 가격대별 필터링(100만원 이하)\n3. 가격대별 필터링(100만원 이상)\n0. 뒤로가기");
+        int select = sc.nextInt();
+        if (select == 1){
+            IntStream.range(0, products.size())
+                    .forEach(i -> {
+                        Product p = products.get(i);
+                        System.out.printf("%d. %-10s | %,10d원 | %3d개 | %s%n",
+                                i+1, p.getProductName(), p.getPrice(), p.getStock(), p.getComment()
+                        );
+                    });
+        } else if (select == 2) {
+            System.out.println("[ 100만원 이하 상품 목록 ]");
+            IntStream.range(0, products.size()).filter(i -> products.get(i).getPrice() <= 1000000)
+                    .forEach(i -> {
+                        Product p = products.get(i);
+                        System.out.printf("%d. %-10s | %,10d원 | %3d개 | %s%n",
+                                i+1, p.getProductName(), p.getPrice(), p.getStock(), p.getComment()
+                        );
+                    });
+        } else if (select == 3) {
+            System.out.println("[ 100만원 이상 상품 목록 ]");
+            IntStream.range(0, products.size()).filter(i -> products.get(i).getPrice() > 1000000)
+                    .forEach(i -> {
+                        Product p = products.get(i);
+                        System.out.printf("%d. %-10s | %,10d원 | %3d개 | %s%n",
+                                i+1, p.getProductName(), p.getPrice(), p.getStock(), p.getComment()
+                        );
+                    });
+        }
         System.out.println("0. 뒤로가기");
-
         System.out.print("선택 >> ");
         int productChoice = sc.nextInt();
 
