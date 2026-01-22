@@ -3,48 +3,42 @@ package org.example.commerce;
 public class Customer {
     private String customerName;
     private String email;
-    private String rank;
     private int totalPrice;
+    private Grade grade; // 등급
 
     //생성자
-    Customer(String customerName, String email, String rank){
+    Customer(String customerName, String email, Grade grade){
         this.customerName = customerName;
         this.email = email;
-        this.rank = rank;
-        updateRank();
+        this.grade = grade;
+        updateGrade();
     }
 
     //누적 금액 추가 메서드
-    public void SumTotalPrice(int amount){
+    public void totalPrice(int amount){
         this.totalPrice += amount;
-        updateRank();
+        updateGrade();
     }
 
     // 총 구매 금액에 따른 등급 산정
-    public void updateRank(){
+    public void updateGrade(){
         if (totalPrice >= 2000000){
-            this.rank = "플레티넘";
+            this.grade = Grade.PLATINUM;
         } else if (totalPrice >= 1000000) {
-            this.rank = "골드";
+            this.grade = Grade.GOLD;
         } else if (totalPrice >= 500000) {
-            this.rank = "실버";
+            this.grade = Grade.SILVER;
         } else {
-            this.rank = "브론즈";
+            this.grade = Grade.BRONZE;
         }
     }
 
     public String getCustomerName() {
         return customerName;
     }
-
     public String getEmail() {
         return email;
     }
-
-    public String getRank() {
-        return rank;
-    }
-
     public int getTotalPrice() {
         return totalPrice;
     }
