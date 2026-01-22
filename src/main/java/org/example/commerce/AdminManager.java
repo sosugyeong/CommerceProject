@@ -117,12 +117,17 @@ public class AdminManager {
         cart.removeProductCart(productName2);
     }
 
+
     public void managePrint(){ //모든 카테고리 리스트를 돌면서 각 카테고리가 가진 상품 리스트 상세정보 출력
+        /*
         for (int i = 0; i < 3; i++) {
             Category targetCategory4 = categories.get(i);
             for(Product p : targetCategory4.getProducts()){
                 System.out.printf("%-10s | %,10d원 | %3d개 | %s%n", p.getProductName(), p.getPrice(), p.getStock(), p.getComment());
             }
-        }
+        }*/
+        //전제 상품 출력을 스르림을 사용하게 변경
+        categories.stream().flatMap(c -> c.getProducts().stream())
+                .forEach(p -> System.out.printf("%-10s | %,10d원 | %3d개 | %s%n", p.getProductName(), p.getPrice(), p.getStock(), p.getComment()));
     }
 }
