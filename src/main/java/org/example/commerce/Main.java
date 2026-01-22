@@ -20,6 +20,10 @@ public class Main {
         List<Product> clothesProducts = new ArrayList<>();
         clothesProducts.add(new Product("가나디 잠옷", 39900, 30, "가나디 수면잠옷"));
 
+        //고객 리스트 생성
+        List<Customer> customerList = new ArrayList<>();
+        customerList.add(new Customer("소수경", "example@example.com", Grade.GOLD));
+
         //전자제품, 식품, 의류 카테고리 객체 생성
         Category electronics = new Category("전자제품", elecProducts);
         Category food = new Category("식품", foodProducts);
@@ -31,7 +35,7 @@ public class Main {
         categories.add(food);
         categories.add(clothes);
 
-        CommerceSystem system = new CommerceSystem(categories);
+        CommerceSystem system = new CommerceSystem(categories, customerList);
         system.start();
     }
 }
