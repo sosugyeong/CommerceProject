@@ -1,6 +1,7 @@
 package org.example.commerce;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class CommerceSystem {
     private final Scanner sc = new Scanner(System.in);
@@ -53,10 +54,17 @@ public class CommerceSystem {
         List<Product> products = category.getProducts();
 
         //상품 목록 출력
-        for (int i = 0; i < products.size(); i++) {
-            Product p = products.get(i);
-            System.out.printf("%d. %-10s | %,10d원 | %3d개 | %s%n", (i + 1), p.getProductName(), p.getPrice(), p.getStock(), p.getComment());
-        }
+//        for (int i = 0; i < products.size(); i++) {
+//            Product p = products.get(i);
+//            System.out.printf("%d. %-10s | %,10d원 | %3d개 | %s%n", (i + 1), p.getProductName(), p.getPrice(), p.getStock(), p.getComment());
+//        }
+        IntStream.range(0, products.size())
+                        .forEach(i -> {
+                            Product p = products.get(i);
+                            System.out.printf("%d. %-10s | %,10d원 | %3d개 | %s%n",
+                                    i+1, p.getProductName(), p.getPrice(), p.getStock(), p.getComment()
+                            );
+                        });
         System.out.println("0. 뒤로가기");
 
         System.out.print("선택 >> ");
