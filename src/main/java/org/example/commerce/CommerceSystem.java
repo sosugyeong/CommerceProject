@@ -5,12 +5,14 @@ import java.util.stream.IntStream;
 
 public class CommerceSystem {
     private final Scanner sc = new Scanner(System.in);
-    private final List<Category> categories;
+    private List<Category> categories;
+    private List<Customer> customerList;
     private Cart cart = new Cart();
     private AdminManager adminManager;
 
-    CommerceSystem(List<Category> categories){
+    CommerceSystem(List<Category> categories, List<Customer> customerList){
         this.categories = categories;
+        this.customerList = customerList;
         //생성 시점에 데이터를 adminManager에 공유
         this.adminManager = new AdminManager(this.categories, this.cart, this.sc);
     }
@@ -128,7 +130,7 @@ public class CommerceSystem {
         System.out.println("[ 총 주문 금액 ]");
         System.out.printf("%,10d원%n", cart.getTotalPrice());
 
-        System.out.println("\n1. 주문 확정      2. 메인으로 돌아가기");
+        System.out.println("\n1. 주문 하기      2. 메인으로 돌아가기");
         int select = sc.nextInt();
         if (select == 1){
             System.out.printf("주문이 완료되었습니다! 총 금액: %,10d원%n",cart.getTotalPrice());
