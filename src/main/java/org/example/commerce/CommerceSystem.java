@@ -11,7 +11,7 @@ public class CommerceSystem {
     CommerceSystem(List<Category> categories){
         this.categories = categories;
         //생성 시점에 데이터를 adminManager에 공유
-        this.adminManager = new AdminManager(this.categories);
+        this.adminManager = new AdminManager(this.categories, this.cart, this.sc);
     }
 
     public void start(){

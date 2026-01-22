@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class AdminManager {
-    private final Scanner sc = new Scanner(System.in);
-    private Cart cart = new Cart();
+    private final Scanner sc;
+    private Cart cart;
     private List<Category> categories;
-    AdminManager(List<Category> categories){
+    AdminManager(List<Category> categories, Cart cart, Scanner sc){
         this.categories = categories;
+        this.cart = cart;
+        this.sc = sc;
     }
 
     //관리자 모드 메뉴 선택
