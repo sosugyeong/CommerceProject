@@ -42,4 +42,8 @@ public class Customer {
     public int getTotalPrice() {
         return totalPrice;
     }
+
+    public Grade getGrade() {
+        return grade;
+    }
 }
