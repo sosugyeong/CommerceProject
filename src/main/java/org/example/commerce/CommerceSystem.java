@@ -133,10 +133,39 @@ public class CommerceSystem {
         System.out.println("\n1. 주문 하기      2. 메인으로 돌아가기");
         int select = sc.nextInt();
         if (select == 1){
-            System.out.printf("주문이 완료되었습니다! 총 금액: %,10d원%n",cart.getTotalPrice());
-            //재고 차감 후 장바구니 초기화
-            updateStock();
-            items.clear();
+            System.out.print("고객 이메일을 입력해주세요\n입력: ");
+            String insertEmail = sc.next();
+
+            Grade grade = foundCustomer(insertEmail).getGrade();
+            if (grade == null){
+                System.out.println("사용자가 없습니다. 메인으로 돌아갑니다.");
+                return;
+            }
+
+            double discount = grade.getDiscount();
+            System.out.printf("해당 유저는 %s 등급이므로 %.0f%% 할인이 적용됩니다.%n", grade.name(), discount*100);
+            System.out.println("주문 하시겠습니까?\n1. 주문 확정  2. 메인으로 돌아가기");
+            int confirm = sc.nextInt();
+
+            if (confirm == 1){
+                int originalPrice = cart.getTotalPrice();
+                int finalPrice = grade.calDiscountPrice(originalPrice);
+                int discountAmount = originalPrice - finalPrice;
+
+                System.out.println("주문이 완료 되었습니다!");
+                System.out.printf("할인 전 금액: %,10d원%n", originalPrice);
+                System.out.printf("%s 등급 할인(%.0f%%): %,10d원%n", grade.name(), discount*100, discountAmount);
+                System.out.printf("최종 결제 금액: %,10d원%n", finalPrice);
+
+                //고객 정보 업데이트
+                foundCustomer(insertEmail).totalPrice(foundCustomer(insertEmail).getTotalPrice() + finalPrice);
+                //누적 금액에 따라 등급 변경
+                foundCustomer(insertEmail).updateGrade();
+
+                //재고 차감 후 장바구니 초기화
+                updateStock();
+                items.clear();
+            }
         }
     }
 
@@ -166,6 +195,13 @@ public class CommerceSystem {
             }
             i++;
         }
+    }
+
+    //이메일로 고객을 찾아줌
+    private Customer foundCustomer(String email){
+        //이메일이 일치하는 사람만 필터링 해서 그중에 첫번째 사람을 선택한다
+        return customerList.stream().filter(c -> c.getEmail().equals(email))
+                .findFirst().orElse(null); //아무도 없으면 null을 반환
     }
 
 }
